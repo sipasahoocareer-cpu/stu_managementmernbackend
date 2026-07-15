@@ -51,6 +51,21 @@ const createNote = async (req, res) => {
   }
 };
 
+const deleteQuiz = async (req, res) => {
+  try {
+    const quiz = await Quiz.findById(req.params.id);
+    if (!quiz) return sendError(res, 404, 'Quiz not found');
+    if (req.user.role !== 'admin' && String(quiz.createdBy) !== String(req.user._id)) {
+      return sendError(res, 403, 'Not authorized to delete this quiz');
+    }
+
+    await quiz.deleteOne();
+    return sendSuccess(res, 200, 'Quiz deleted successfully');
+  } catch (error) {
+    return sendError(res, 500, error.message);
+  }
+};
+
 const listNotes = async (req, res) => {
   try {
     let filter = {};
@@ -244,4 +259,5 @@ module.exports = {
   submitQuiz,
   createAttendance,
   listAttendance,
+  deleteQuiz,
 };

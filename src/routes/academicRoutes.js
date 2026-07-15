@@ -10,6 +10,7 @@ const {
   createQuiz,
   listQuizzes,
   submitQuiz,
+  deleteQuiz,
   createAttendance,
   listAttendance,
 } = require('../controllers/academicController');
@@ -23,6 +24,7 @@ router.get('/notes/:id/file', getNoteFile);
 
 router.post('/quiz', createQuiz);
 router.get('/quiz', listQuizzes);
+router.post('/quiz/:id/delete', deleteQuiz);
 router.post('/quiz/:id/submit', submitQuiz);
 
 router.post('/attendance', createAttendance);
